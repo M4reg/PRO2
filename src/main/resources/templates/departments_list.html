@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>My Demo App</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/styles.css}" />
+</head>
+<body>
+        <h1>List of All Departments</h1>
+            <a th:href="@{/departments/add}">Add New Department</a>
+
+        <ul>
+            <li th:each="department: ${departments}">
+                <a th:href="@{'/departments/' + ${department.id}}" th:text="${department.name}"></a>
+            </li>
+        </ul>
+</body>
+</html>

@@ -3,14 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <title>My Demo App</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/styles.css}" />
 </head>
 <body>
-<h1 th:text="${lecturer != null ? 'Lecturer: ' + lecturer.name : 'Lecturer not found.'}"></h1>
+<h1 th:text="${user != null ? 'User: ' + user.name : 'User not found.'}"></h1>
 
-<a th:if="${lecturer != null}" th:href="@{'/lecturers/' + ${lecturer.id} + '/edit'}">Edit Lecturer</a>
-<a th:if="${lecturer != null}" th:href="@{'/lecturers/' + ${lecturer.id} + '/delete'}">Delete Lecturer</a>
+<div th:if="${user != null}">
+    <p>Email: <span th:text="${user.email}"></span></p>
+    <p>Username: <span th:text="${user.username}"></span></p>
+    <p>Role: <span th:text="${user.role}"></span></p>
+    <a th:href="@{'/users/' + ${user.id} + '/edit'}">Edit User</a>
+    <a th:href="@{'/users/' + ${user.id} + '/delete'}">Delete User</a>
+</div>
 
-<a th:if="${lecturer == null}" th:href="@{/lecturers/}">Back to Lecturer List</a>
+<a th:if="${user == null}" th:href="@{/users/}">Back to User List</a>
 
 </body>
 </html>

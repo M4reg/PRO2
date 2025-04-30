@@ -36,7 +36,7 @@ public class SecurityConfig {
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests((requests) -> requests // Change to authorizeHttpRequests
-                        //.requestMatchers("/", "/home").permitAll()
+                        .requestMatchers("/styles.css", "/static/**").permitAll() // Povolit statické zdroje
                         .requestMatchers("/admin/**").hasRole("ADMIN")
                         .anyRequest().authenticated()
                 )

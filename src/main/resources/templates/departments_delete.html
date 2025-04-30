@@ -1,0 +1,19 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Document</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/styles.css}" />
+</head>
+<body>
+        <h1 th:text="${department != null ? 'Do you really want to delete department: ' + department.name : 'Department not found.'}"></h1>
+
+        <form th:if="${department != null}" method="post" th:action="@{'/departments/' + ${department.id} + '/delete'}">
+            <input type="submit" value="Yes, delete!">
+            <a th:href="@{'/departments/' + ${department.id}}">No</a>
+        </form>
+
+        <a th:if="${department == null}" th:href="@{/departments/}">Back to Department List</a>
+</body>
+</html>

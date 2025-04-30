@@ -1,8 +1,8 @@
-<!-- src/main/resources/templates/custom-login.html -->
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <title>Login</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/styles.css}" />
 </head>
 <body>
 <h2>Login</h2>
@@ -22,7 +22,7 @@
         <input type="password" id="password" name="password"/>
     </div>
     <div>
-        <button type="submit">Login</button>
+        <input type="submit" value="Login" class="button"/>
     </div>
 </form>
 </body>

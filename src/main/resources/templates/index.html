@@ -3,21 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <title>My Demo App</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/styles.css}" />
 </head>
 <body>
 <h1>My Demo App</h1>
 <h3 th:text="${#authentication.name}"></h3>
 
-<a th:href="@{/users/}">List of All Cars</a>
-<a th:href="@{/lecturers/}">List of All Lecturers</a>
-<a th:href="@{/courses/}">List of All Courses</a>
-
-<a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/admin}">Admin section</a>
-
-<br><br>
+<div class="nav-links">
+    <a th:href="@{/users/}">List of All Users</a>
+    <a th:href="@{/departments/}">List of All Departments</a>
+    <a th:href="@{/lecturers/}">List of All Lecturers</a>
+    <a th:href="@{/courses/}">List of All Courses</a>
+    <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/admin}">Admin Section</a>
+</div>
 
 <form method="post" th:action="@{/logout}">
-    <input type="submit" value="Logout">
+    <input type="submit" value="Logout" class="button">
 </form>
 
 </body>
