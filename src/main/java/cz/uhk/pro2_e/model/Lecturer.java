@@ -1,7 +1,6 @@
 package cz.uhk.pro2_e.model;
 
 import jakarta.persistence.*;
-
 import java.util.List;
 
 @Entity
@@ -13,6 +12,14 @@ public class Lecturer {
     private long id;
 
     private String name;
+    private String email;
+    private String academicTitle;
+
+    @ManyToOne
+    private Department department;
+
+    @OneToMany(mappedBy = "lecturer")
+    private List<Course> courses;
 
     public List<Course> getCourses() {
         return courses;
@@ -21,9 +28,6 @@ public class Lecturer {
     public void setCourses(List<Course> courses) {
         this.courses = courses;
     }
-
-    @OneToMany(mappedBy = "lecturer")
-    private List<Course> courses;
 
     public long getId() {
         return id;
@@ -39,5 +43,29 @@ public class Lecturer {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getAcademicTitle() {
+        return academicTitle;
+    }
+
+    public Department getDepartment() {
+        return department;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setAcademicTitle(String academicTitle) {
+        this.academicTitle = academicTitle;
+    }
+
+    public void setDepartment(Department department) {
+        this.department = department;
     }
 }

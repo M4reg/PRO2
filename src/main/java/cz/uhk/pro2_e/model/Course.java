@@ -11,6 +11,8 @@ public class Course {
     private long id;
 
     private String name;
+    private String code;
+    private int credits;
 
     @ManyToOne
     private Lecturer lecturer;
@@ -37,5 +39,21 @@ public class Course {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    public String getCode() {
+        return code;
+    }
+
+    public int getCredits() {
+        return credits;
+    }
+
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    public void setCredits(int credits) {
+        this.credits = credits;
     }
 }
