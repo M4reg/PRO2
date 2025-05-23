@@ -4,14 +4,16 @@ import cz.uhk.pro2_e.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.access.AccessDeniedHandler;
+
+import static org.springframework.security.config.Customizer.withDefaults;
 
 @Configuration
 @EnableWebSecurity
@@ -27,32 +29,14 @@ public class SecurityConfig {
         this.passwordEncoder = passwordEncoder;
     }
 
-    @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userService).passwordEncoder(passwordEncoder);
-    }
-
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http
-                .authorizeHttpRequests((requests) -> requests // Change to authorizeHttpRequests
-                        .requestMatchers("/styles.css", "/static/**").permitAll() // Povolit statické zdroje
-                        .requestMatchers("/admin/**").hasRole("ADMIN")
+                .authorizeHttpRequests(authz -> authz
+                        .requestMatchers("/login", "/styles.css", "/h2-console/**").permitAll()
                         .anyRequest().authenticated()
                 )
-                //.formLogin(Customizer.withDefaults())
-                .formLogin((form) -> form
-                        .loginPage("/login") // Custom login page
-                        .loginProcessingUrl("/login") // Form submission URL
-                        .defaultSuccessUrl("/", true)
-                        .permitAll()) // Permit all to access the login page
-                .logout(logout -> logout
-                        .logoutUrl("/logout")
-                        .logoutSuccessUrl("/login?logout")
-                        .permitAll()
-                )
-                .exceptionHandling((exceptions) -> exceptions
-                        .accessDeniedHandler(accessDeniedHandler()));
+                .formLogin(withDefaults());
 
         return http.build();
     }
@@ -62,5 +46,10 @@ public class SecurityConfig {
         return (request, response, accessDeniedException) -> {
             response.sendRedirect("/403");
         };
+    }
+
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userService).passwordEncoder(passwordEncoder);
     }
 }

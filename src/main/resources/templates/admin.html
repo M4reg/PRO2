@@ -1,15 +1,25 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <meta charset="UTF-8">
-    <title>Admin Dashboard</title>
-    <link rel="stylesheet" type="text/css" th:href="@{/styles.css}" />
+    <title>Modelmate - Admin Area</title>
+    <link rel="stylesheet" href="/styles.css"/>
 </head>
 <body>
-<div>
-    <h1>Admin Area</h1>
+<header>
+    <h1>Modelmate</h1>
+    <nav>
+        <a href="/models/">Home (Models)</a> |
+        <a href="/colors/">Colors List</a> |
+        <a href="/chemicals/">Chemicals List</a> |
+        <a href="/users/">Users</a> |
+        <a href="/admin">Admin Section</a> |
+        <a href="/logout">Logout</a>
+    </nav>
+</header>
+<main>
+    <h2>Admin Area</h2>
     <p>This content is visible only to admins.</p>
-    <a th:href="@{/}">Back to Home</a>
-</div>
+    <a href="/models/">Back to Home</a>
+</main>
 </body>
 </html>

@@ -1,12 +1,25 @@
-<!-- src/main/resources/templates/custom403.html -->
 <!DOCTYPE html>
-<html>
+<html xmlns:th="http://www.thymeleaf.org">
 <head>
-  <title>Forbidden</title>
-  <link rel="stylesheet" type="text/css" th:href="@{/styles.css}" />
+  <title>Modelmate - Forbidden</title>
+  <link rel="stylesheet" href="/styles.css"/>
 </head>
 <body>
-<h1>403 - Forbidden</h1>
-<p>Sorry, you don't have permission to access this page.</p>
+<header>
+  <h1>Modelmate</h1>
+  <nav>
+    <a href="/models/">Home (Models)</a> |
+    <a href="/colors/">Colors List</a> |
+    <a href="/chemicals/">Chemicals List</a> |
+    <a href="/users/">Users</a> |
+    <a href="/admin">Admin Section</a> |
+    <a href="/logout">Logout</a>
+  </nav>
+</header>
+<main>
+  <h2>403 - Forbidden</h2>
+  <p>Sorry, you don't have permission to access this page.</p>
+  <a href="/models/">Back to Home</a>
+</main>
 </body>
 </html>

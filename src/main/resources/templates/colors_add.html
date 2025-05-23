@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Modelmate - Add/Edit Color</title>
+    <link rel="stylesheet" href="/styles.css"/>
+</head>
+<body>
+<header>
+    <h1>Modelmate</h1>
+    <nav>
+        <a href="/models/">Home (Models)</a> |
+        <a href="/colors/">Colors List</a> |
+        <a href="/chemicals/">Chemicals List</a> |
+        <a href="/users/">Users</a> |
+        <a href="/admin">Admin Section</a> |
+        <a href="/logout">Logout</a>
+    </nav>
+</header>
+<main>
+    <h2 th:text="${color.id} ? 'Edit Color' : 'Add New Color'">Add New Color</h2>
+    <form th:action="@{/colors/save}" th:object="${color}" method="post">
+        <input type="hidden" th:field="*{id}"/>
+        <p>
+            <label>Name:</label>
+            <input type="text" th:field="*{name}"/>
+        </p>
+        <p>
+            <label>Brand:</label>
+            <input type="text" th:field="*{brand}"/>
+        </p>
+        <p>
+            <label>Code:</label>
+            <input type="text" th:field="*{code}"/>
+        </p>
+        <button type="submit">Save</button>
+    </form>
+    <a href="/colors/">Back to Colors List</a>
+</main>
+</body>
+</html>

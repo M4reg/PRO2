@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Modelmate - Chemical Details</title>
+    <link rel="stylesheet" href="/styles.css"/>
+</head>
+<body>
+<header>
+    <h1>Modelmate</h1>
+    <nav>
+        <a href="/models/">Home (Models)</a> |
+        <a href="/colors/">Colors List</a> |
+        <a href="/chemicals/">Chemicals List</a> |
+        <a href="/users/">Users</a> |
+        <a href="/admin">Admin Section</a> |
+        <a href="/logout">Logout</a>
+    </nav>
+</header>
+<main>
+    <h2>Chemical Details</h2>
+    <p><strong>Name:</strong> <span th:text="${chemical.name}">Chemical Name</span></p>
+    <p><strong>Brand:</strong> <span th:text="${chemical.brand}">Brand</span></p>
+    <p><strong>Type:</strong> <span th:text="${chemical.type}">Type</span></p>
+    <a th:href="@{/chemicals/{id}/edit(id=${chemical.id})}">Edit Chemical</a>
+    <a th:href="@{/chemicals/{id}/delete(id=${chemical.id})}">Delete Chemical</a>
+    <a href="/chemicals/">Back to Chemicals List</a>
+</main>
+</body>
+</html>

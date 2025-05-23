@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Modelmate - Model Details</title>
+    <link rel="stylesheet" href="/styles.css"/>
+</head>
+<body>
+<header>
+    <h1>Modelmate</h1>
+    <nav>
+        <a href="/models/">Home (Models)</a> |
+        <a href="/colors/">Colors List</a> |
+        <a href="/chemicals/">Chemicals List</a> |
+        <a href="/users/">Users</a> |
+        <a href="/admin">Admin Section</a> |
+        <a href="/logout">Logout</a>
+    </nav>
+</header>
+<main>
+    <h2>Model Details</h2>
+    <p><strong>Name:</strong> <span th:text="${model.name}">Model Name</span></p>
+    <p><strong>Description:</strong> <span th:text="${model.description}">Description</span></p>
+    <p><strong>Created by:</strong> <span th:text="${model.user.name}">User Name</span></p>
+    <p><strong>Colors Used:</strong></p>
+    <ul>
+        <li th:each="color : ${model.colors}" th:text="${color.name + ' (' + color.brand + ', ' + color.code + ')'}">Color</li>
+    </ul>
+    <p><strong>Chemicals Used:</strong></p>
+    <ul>
+        <li th:each="chemical : ${model.chemicals}" th:text="${chemical.name + ' (' + chemical.brand + ', ' + chemical.type + ')'}">Chemical</li>
+    </ul>
+    <a th:href="@{/models/{id}/edit(id=${model.id})}">Edit Model</a>
+    <a th:href="@{/models/{id}/delete(id=${model.id})}">Delete Model</a>
+    <a href="/models/">Back to Model List</a>
+</main>
+</body>
+</html>

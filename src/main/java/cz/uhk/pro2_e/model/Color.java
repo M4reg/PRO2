@@ -1,29 +1,22 @@
 package cz.uhk.pro2_e.model;
 
 import jakarta.persistence.*;
+import java.util.List;
 
 @Entity
-@Table(name = "courses")
-public class Course {
+@Table(name = "colors")
+public class Color {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private long id;
 
     private String name;
+    private String brand;
     private String code;
-    private int credits;
 
-    @ManyToOne
-    private Lecturer lecturer;
-
-    public Lecturer getLecturer() {
-        return lecturer;
-    }
-
-    public void setLecturer(Lecturer lecturer) {
-        this.lecturer = lecturer;
-    }
+    @ManyToMany(mappedBy = "colors")
+    private List<Model> models;
 
     public long getId() {
         return id;
@@ -41,19 +34,27 @@ public class Course {
         this.name = name;
     }
 
-    public String getCode() {
-        return code;
+    public String getBrand() {
+        return brand;
     }
 
-    public int getCredits() {
-        return credits;
+    public void setBrand(String brand) {
+        this.brand = brand;
+    }
+
+    public String getCode() {
+        return code;
     }
 
     public void setCode(String code) {
         this.code = code;
     }
 
-    public void setCredits(int credits) {
-        this.credits = credits;
+    public List<Model> getModels() {
+        return models;
+    }
+
+    public void setModels(List<Model> models) {
+        this.models = models;
     }
 }

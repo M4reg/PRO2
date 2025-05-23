@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Modelmate</title>
+    <title>Modelmate - Delete Color</title>
     <link rel="stylesheet" href="/styles.css"/>
 </head>
 <body>
@@ -17,9 +17,13 @@
     </nav>
 </header>
 <main>
-    <h2>Welcome to Modelmate</h2>
-    <p>This is a platform for modelers to manage their models, colors, and chemicals.</p>
-    <p><a href="/models/">View Your Models</a></p>
+    <h2>Delete Color</h2>
+    <p>Are you sure you want to delete this color?</p>
+    <p><strong>Name:</strong> <span th:text="${color.name}">Color Name</span></p>
+    <form th:action="@{/colors/{id}/delete(id=${color.id})}" method="post">
+        <button type="submit">Confirm Delete</button>
+    </form>
+    <a href="/colors/">Back to Colors List</a>
 </main>
 </body>
 </html>

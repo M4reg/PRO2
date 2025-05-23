@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Modelmate - Chemicals</title>
+    <link rel="stylesheet" href="/styles.css"/>
+</head>
+<body>
+<header>
+    <h1>Modelmate</h1>
+    <nav>
+        <a href="/models/">Home (Models)</a> |
+        <a href="/colors/">Colors List</a> |
+        <a href="/chemicals/">Chemicals List</a> |
+        <a href="/users/">Users</a> |
+        <a href="/admin">Admin Section</a> |
+        <a href="/logout">Logout</a>
+    </nav>
+</header>
+<main>
+    <h2>List of All Chemicals</h2>
+    <a href="/chemicals/add">Add New Chemical</a>
+    <table>
+        <tr>
+            <th>No</th>
+            <th>Name</th>
+            <th>Brand</th>
+            <th>Type</th>
+            <th>Actions</th>
+        </tr>
+        <tr th:each="chemical, iter : ${chemicals}">
+            <td th:text="${iter.count}">No</td>
+            <td th:text="${chemical.name}">Name</td>
+            <td th:text="${chemical.brand}">Brand</td>
+            <td th:text="${chemical.type}">Type</td>
+            <td>
+                <a th:href="@{/chemicals/{id}(id=${chemical.id})}">View</a>
+                <a th:href="@{/chemicals/{id}/edit(id=${chemical.id})}">Edit</a>
+                <a th:href="@{/chemicals/{id}/delete(id=${chemical.id})}">Delete</a>
+            </td>
+        </tr>
+    </table>
+</main>
+</body>
+</html>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title>Modelmate</title>
+    <title>Modelmate - Models</title>
     <link rel="stylesheet" href="/styles.css"/>
 </head>
 <body>
@@ -17,9 +17,15 @@
     </nav>
 </header>
 <main>
-    <h2>Welcome to Modelmate</h2>
-    <p>This is a platform for modelers to manage their models, colors, and chemicals.</p>
-    <p><a href="/models/">View Your Models</a></p>
+    <h2>List of All Models</h2>
+    <a href="/models/add">Add New Model</a>
+    <div class="model-grid">
+        <div class="model-card" th:each="model : ${models}">
+            <h3 th:text="${model.name}">Model Name</h3>
+            <p th:text="${model.description}">Description</p>
+            <a th:href="@{/models/{id}(id=${model.id})}">View Details</a>
+        </div>
+    </div>
 </main>
 </body>
 </html>

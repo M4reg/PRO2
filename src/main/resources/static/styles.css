@@ -1,75 +1,126 @@
 body {
     font-family: Arial, sans-serif;
-    margin: 20px;
-    line-height: 1.6;
+    margin: 0;
+    padding: 0;
+    background-color: #f4f4f4;
 }
 
-h1 {
-    color: #333;
+header {
+    background-color: #333;
+    color: white;
+    padding: 10px;
+    text-align: center;
 }
 
-.nav-links a {
-    display: block;
-    margin: 10px 0;
+nav a {
+    color: white;
+    margin: 0 10px;
     text-decoration: none;
-    color: #007BFF;
 }
 
-.nav-links a:hover {
+nav a:hover {
     text-decoration: underline;
 }
 
-.button {
-    display: inline-block;
-    padding: 8px 16px;
-    margin: 5px;
+main {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+}
+
+h2 {
+    color: #333;
+}
+
+.model-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
+}
+
+.model-card {
+    background-color: white;
+    border: 1px solid #ddd;
+    padding: 15px;
+    border-radius: 5px;
+    text-align: center;
+}
+
+.model-card h3 {
+    margin: 0 0 10px;
+}
+
+.model-card a {
+    color: #007bff;
     text-decoration: none;
-    color: white;
-    background-color: #007BFF;
-    border-radius: 4px;
 }
 
-.button:hover {
-    background-color: #0056b3;
+.model-card a:hover {
+    text-decoration: underline;
 }
 
-form {
+table {
+    width: 100%;
+    border-collapse: collapse;
     margin-top: 20px;
 }
 
-input[type="text"], input[type="password"], select {
-    margin: 5px 0;
+th, td {
+    border: 1px solid #ddd;
     padding: 8px;
-    width: 200px;
+    text-align: left;
 }
 
-input[type="submit"] {
-    padding: 8px 16px;
-    background-color: #28a745;
+th {
+    background-color: #f2f2f2;
+}
+
+form {
+    background-color: white;
+    padding: 20px;
+    border-radius: 5px;
+    margin-top: 20px;
+}
+
+form label {
+    display: block;
+    margin: 10px 0 5px;
+}
+
+form input, form textarea, form select {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+}
+
+form button {
+    background-color: #007bff;
     color: white;
+    padding: 10px 20px;
     border: none;
     border-radius: 4px;
     cursor: pointer;
 }
 
-input[type="submit"]:hover {
-    background-color: #218838;
+form button:hover {
+    background-color: #0056b3;
 }
 
-ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-ul li {
-    margin: 10px 0;
-}
-
-ul li a {
+a {
+    color: #007bff;
     text-decoration: none;
-    color: #007BFF;
 }
 
-ul li a:hover {
+a:hover {
     text-decoration: underline;
+}
+
+.error {
+    color: red;
+}
+
+.success {
+    color: green;
 }
