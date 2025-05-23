@@ -3,6 +3,7 @@ package cz.uhk.pro2_e.controller;
 import cz.uhk.pro2_e.model.User;
 import cz.uhk.pro2_e.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -13,6 +14,8 @@ import java.util.ArrayList;
 @RequestMapping("/users")
 public class UserController {
 
+    @Autowired
+    private PasswordEncoder passwordEncoder;
     private UserService userService;
 
     @Autowired
@@ -46,6 +49,10 @@ public class UserController {
 
     @PostMapping("/save")
     public String save(@ModelAttribute User user) {
+        // zašifrovat heslo jen pokud je nově zadané nebo při novém uživateli
+        if (user.getId() == 0 || !user.getPassword().startsWith("$2a$")) {
+            user.setPassword(passwordEncoder.encode(user.getPassword()));
+        }
         userService.saveUser(user);
         return "redirect:/users/";
     }

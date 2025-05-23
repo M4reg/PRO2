@@ -1,12 +1,17 @@
 package cz.uhk.pro2_e.controller;
 
 import cz.uhk.pro2_e.model.Model;
+import cz.uhk.pro2_e.model.User;
+import cz.uhk.pro2_e.security.MyUserDetails;
 import cz.uhk.pro2_e.service.ModelService;
 import cz.uhk.pro2_e.service.ColorService;
 import cz.uhk.pro2_e.service.ChemicalService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.security.core.context.SecurityContextHolder;
+import java.util.List;
 
 @Controller
 @RequestMapping("/models")
@@ -15,6 +20,7 @@ public class ModelController {
     private final ModelService modelService;
     private final ColorService colorService;
     private final ChemicalService chemicalService;
+
 
     @Autowired
     public ModelController(ModelService modelService, ColorService colorService, ChemicalService chemicalService) {
@@ -25,13 +31,23 @@ public class ModelController {
 
     @GetMapping("/")
     public String list(org.springframework.ui.Model model) {
-        model.addAttribute("models", modelService.getAllModels());
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        MyUserDetails userDetails = (MyUserDetails) auth.getPrincipal();
+        User currentUser = userDetails.getUser();
+
+        List<Model> models = currentUser.getRole().equals("ADMIN")
+                ? modelService.getAllModels()
+                : modelService.getAllModelsByUser(currentUser);
+
+        model.addAttribute("models", models);
         return "models_list";
     }
 
     @GetMapping("/{id}")
     public String detail(org.springframework.ui.Model model, @PathVariable long id) {
-        model.addAttribute("model", modelService.getModel(id));
+        Model m = modelService.getModel(id);
+        if (!canAccessModel(m)) return "redirect:/403";
+        model.addAttribute("model", m);
         return "models_detail";
     }
 
@@ -45,7 +61,12 @@ public class ModelController {
 
     @GetMapping("/{id}/edit")
     public String edit(org.springframework.ui.Model model, @PathVariable long id) {
-        model.addAttribute("model", modelService.getModel(id));
+        Model m = modelService.getModel(id);
+        if (!canAccessModel(m)) {
+            return "redirect:/403";
+        }
+
+        model.addAttribute("model", m);
         model.addAttribute("colors", colorService.getAllColors());
         model.addAttribute("chemicals", chemicalService.getAllChemicals());
         return "models_add";
@@ -53,19 +74,44 @@ public class ModelController {
 
     @PostMapping("/save")
     public String save(@ModelAttribute Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        MyUserDetails userDetails = (MyUserDetails) auth.getPrincipal();
+        User currentUser = userDetails.getUser();
+
+        if (model.getId() == 0) {
+            model.setUser(currentUser);
+        }
         modelService.saveModel(model);
         return "redirect:/models/";
     }
 
     @GetMapping("/{id}/delete")
     public String delete(org.springframework.ui.Model model, @PathVariable long id) {
-        model.addAttribute("model", modelService.getModel(id));
+        Model m = modelService.getModel(id);
+        if (!canAccessModel(m)) {
+            return "redirect:/403";
+        }
+
+        model.addAttribute("model", m);
         return "models_delete";
     }
 
     @PostMapping("/{id}/delete")
     public String deleteConfirm(@PathVariable long id) {
+        Model m = modelService.getModel(id);
+        if (!canAccessModel(m)) {
+            return "redirect:/403";
+        }
+
         modelService.deleteModel(id);
         return "redirect:/models/";
+    }
+
+    private boolean canAccessModel(Model m) {
+        if (m == null) return false;
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        MyUserDetails userDetails = (MyUserDetails) auth.getPrincipal();
+        User currentUser = userDetails.getUser();
+        return currentUser.getRole().equals("ADMIN") || m.getUser().getId() == currentUser.getId();
     }
 }

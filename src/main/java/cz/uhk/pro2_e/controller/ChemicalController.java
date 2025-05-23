@@ -1,8 +1,12 @@
 package cz.uhk.pro2_e.controller;
 
 import cz.uhk.pro2_e.model.Chemical;
+import cz.uhk.pro2_e.model.User;
+import cz.uhk.pro2_e.security.MyUserDetails;
 import cz.uhk.pro2_e.service.ChemicalService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
@@ -44,6 +48,13 @@ public class ChemicalController {
 
     @PostMapping("/save")
     public String save(@ModelAttribute Chemical chemical) {
+
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        MyUserDetails userDetails = (MyUserDetails) auth.getPrincipal();
+        User currentUser = userDetails.getUser();
+        if (chemical.getId() == 0) {
+            chemical.setUser(currentUser);
+        }
         chemicalService.saveChemical(chemical);
         return "redirect:/chemicals/";
     }

@@ -77,7 +77,6 @@ th {
 
 form {
     background-color: white;
-    padding: 20px;
     border-radius: 5px;
     margin-top: 20px;
 }
@@ -124,3 +123,4 @@ a:hover {
 .success {
     color: green;
 }
+

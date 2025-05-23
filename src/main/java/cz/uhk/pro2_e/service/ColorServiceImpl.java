@@ -1,6 +1,7 @@
 package cz.uhk.pro2_e.service;
 
 import cz.uhk.pro2_e.model.Color;
+import cz.uhk.pro2_e.model.User;
 import cz.uhk.pro2_e.repository.ColorRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,5 +35,9 @@ public class ColorServiceImpl implements ColorService {
     @Override
     public void deleteColor(long id) {
         colorRepository.deleteById(id);
+    }
+
+    public List<Color> getAllColorsByUser(User user) {
+        return colorRepository.findByUser(user);
     }
 }

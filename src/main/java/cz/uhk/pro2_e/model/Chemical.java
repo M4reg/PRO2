@@ -18,6 +18,10 @@ public class Chemical {
     @ManyToMany(mappedBy = "chemicals")
     private List<Model> models;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
     public long getId() {
         return id;
     }
@@ -57,4 +61,13 @@ public class Chemical {
     public void setModels(List<Model> models) {
         this.models = models;
     }
+
+    public User getUser() {
+        return user;
+    }
+
+    public void setUser(User user) {
+        this.user = user;
+    }
+
 }
