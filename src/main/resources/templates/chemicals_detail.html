@@ -26,8 +26,8 @@
     <p><strong>Type:</strong> <span th:text="${chemical.type}">Type</span></p>
     <p sec:authorize="hasRole('ROLE_ADMIN')">
         <strong>Created by:</strong>
-        <span th:if="${color.user != null}" th:text="${color.user.name}">Autor</span>
-        <span th:if="${color.user == null}">Neznámý uživatel</span>
+        <span th:if="${chemical.user != null}" th:text="${chemical.user.name}">Autor</span>
+        <span th:if="${chemical.user == null}">Neznámý uživatel</span>
     </p>
     <a th:href="@{/chemicals/{id}/edit(id=${chemical.id})}">Edit Chemical</a>
     <a th:href="@{/chemicals/{id}/delete(id=${chemical.id})}">Delete Chemical</a>
