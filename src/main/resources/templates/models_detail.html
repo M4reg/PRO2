@@ -23,7 +23,11 @@
     <h2>Model Details</h2>
     <p><strong>Name:</strong> <span th:text="${model.name}">Model Name</span></p>
     <p><strong>Description:</strong> <span th:text="${model.description}">Description</span></p>
-    <p><strong>Created by:</strong> <span th:text="${model.user.name}">User Name</span></p>
+    <p><strong>Created by:</strong>
+        <span th:text="${model.user != null ? model.user.name : 'Neznámý uživatel'}">Autor</span>
+    </p>
+
+
     <p><strong>Colors Used:</strong></p>
     <ul>
         <li th:each="color : ${model.colors}" th:text="${color.name + ' (' + color.brand + ', ' + color.code + ')'}">Color</li>

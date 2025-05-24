@@ -64,7 +64,14 @@ public class ColorController {
         User currentUser = userDetails.getUser();
 
         if (color.getId() == 0) {
+            // nový záznam – nastav vlastníka
             color.setUser(currentUser);
+        } else {
+            // existující záznam – musíme z databáze získat původního vlastníka
+            Color original = colorService.getColor(color.getId());
+            if (original != null) {
+                color.setUser(original.getUser());
+            }
         }
 
         colorService.saveColor(color);

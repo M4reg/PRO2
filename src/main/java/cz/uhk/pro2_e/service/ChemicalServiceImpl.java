@@ -1,6 +1,7 @@
 package cz.uhk.pro2_e.service;
 
 import cz.uhk.pro2_e.model.Chemical;
+import cz.uhk.pro2_e.model.User;
 import cz.uhk.pro2_e.repository.ChemicalRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -34,5 +35,10 @@ public class ChemicalServiceImpl implements ChemicalService {
     @Override
     public void deleteChemical(long id) {
         chemicalRepository.deleteById(id);
+    }
+
+    @Override
+    public List<Chemical> getAllChemicalsByUser(User user) {
+        return chemicalRepository.findByUser(user);
     }
 }

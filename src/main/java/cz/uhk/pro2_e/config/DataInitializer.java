@@ -29,31 +29,36 @@ public class DataInitializer {
     @Bean
     public CommandLineRunner init() {
         return args -> {
-            User user = new User();
-            user.setName("User");
-            user.setUsername("user");
-            user.setPassword(passwordEncoder.encode("heslo"));
-            user.setRole("USER");
-            userService.saveUser(user);
+            if (userService.getAllUsers().isEmpty()) {
 
-            User admin = new User();
-            admin.setName("Admin");
-            admin.setUsername("admin");
-            admin.setPassword(passwordEncoder.encode("heslo"));
-            admin.setRole("ADMIN");
-            userService.saveUser(admin);
+                User user = new User();
+                user.setName("User");
+                user.setUsername("user");
+                user.setPassword(passwordEncoder.encode("heslo"));
+                user.setRole("USER");
+                userService.saveUser(user);
 
-            Color color1 = new Color();
-            color1.setName("Olive Green");
-            color1.setBrand("Tamiya");
-            color1.setCode("XF-58");
-            colorService.saveColor(color1);
+                User admin = new User();
+                admin.setName("Admin");
+                admin.setUsername("admin");
+                admin.setPassword(passwordEncoder.encode("heslo"));
+                admin.setRole("ADMIN");
+                userService.saveUser(admin);
 
-            Chemical chemical1 = new Chemical();
-            chemical1.setName("Matt Varnish");
-            chemical1.setBrand("Tamiya");
-            chemical1.setType("Varnish");
-            chemicalService.saveChemical(chemical1);
+                Color color1 = new Color();
+                color1.setName("Olive Green");
+                color1.setBrand("Tamiya");
+                color1.setCode("XF-58");
+                color1.setUser(admin); // nebo user, podle toho kdo má být vlastníkem
+                colorService.saveColor(color1);
+
+                Chemical chemical1 = new Chemical();
+                chemical1.setName("Matt Varnish");
+                chemical1.setBrand("Tamiya");
+                chemical1.setType("Varnish");
+                chemical1.setUser(admin);
+                chemicalService.saveChemical(chemical1);
+            }
         };
     }
 }

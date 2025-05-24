@@ -53,22 +53,44 @@ public class ModelController {
 
     @GetMapping("/add")
     public String add(org.springframework.ui.Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        MyUserDetails userDetails = (MyUserDetails) auth.getPrincipal();
+        User currentUser = userDetails.getUser();
+
         model.addAttribute("model", new Model());
-        model.addAttribute("colors", colorService.getAllColors());
-        model.addAttribute("chemicals", chemicalService.getAllChemicals());
+
+        if (currentUser.getRole().equals("ADMIN")) {
+            model.addAttribute("colors", colorService.getAllColors());
+            model.addAttribute("chemicals", chemicalService.getAllChemicals());
+        } else {
+            model.addAttribute("colors", colorService.getAllColorsByUser(currentUser));
+            model.addAttribute("chemicals", chemicalService.getAllChemicalsByUser(currentUser));
+        }
+
         return "models_add";
     }
 
     @GetMapping("/{id}/edit")
     public String edit(org.springframework.ui.Model model, @PathVariable long id) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        MyUserDetails userDetails = (MyUserDetails) auth.getPrincipal();
+        User currentUser = userDetails.getUser();
+
         Model m = modelService.getModel(id);
         if (!canAccessModel(m)) {
-            return "redirect:/403";
+            return "redirect:/403"; // nebo error page
         }
 
         model.addAttribute("model", m);
-        model.addAttribute("colors", colorService.getAllColors());
-        model.addAttribute("chemicals", chemicalService.getAllChemicals());
+
+        if (currentUser.getRole().equals("ADMIN")) {
+            model.addAttribute("colors", colorService.getAllColors());
+            model.addAttribute("chemicals", chemicalService.getAllChemicals());
+        } else {
+            model.addAttribute("colors", colorService.getAllColorsByUser(currentUser));
+            model.addAttribute("chemicals", chemicalService.getAllChemicalsByUser(currentUser));
+        }
+
         return "models_add";
     }
 
@@ -80,10 +102,17 @@ public class ModelController {
 
         if (model.getId() == 0) {
             model.setUser(currentUser);
+        } else {
+            Model original = modelService.getModel(model.getId());
+            if (original != null) {
+                model.setUser(original.getUser());
+            }
         }
+
         modelService.saveModel(model);
         return "redirect:/models/";
     }
+
 
     @GetMapping("/{id}/delete")
     public String delete(org.springframework.ui.Model model, @PathVariable long id) {

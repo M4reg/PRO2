@@ -32,16 +32,27 @@
             <textarea th:field="*{description}"></textarea>
         </p>
         <p>
-            <label>Colors:</label>
-            <select th:field="*{colors}" multiple>
-                <option th:each="color : ${colors}" th:value="${color.id}" th:text="${color.name + ' (' + color.brand + ')'}"></option>
-            </select>
+            <label>Colors:</label><br/>
+        <div th:each="color : ${colors}">
+            <label>
+                <input type="checkbox"
+                       th:field="*{colors}"
+                       th:value="${color.id}"/>
+                <span th:text="${color.name + ' (' + color.brand + ')'}"></span>
+            </label><br/>
+        </div>
         </p>
+
         <p>
-            <label>Chemicals:</label>
-            <select th:field="*{chemicals}" multiple>
-                <option th:each="chemical : ${chemicals}" th:value="${chemical.id}" th:text="${chemical.name + ' (' + chemical.brand + ')'}"></option>
-            </select>
+            <label>Chemicals:</label><br/>
+        <div th:each="chemical : ${chemicals}">
+            <label>
+                <input type="checkbox"
+                       th:field="*{chemicals}"
+                       th:value="${chemical.id}"/>
+                <span th:text="${chemical.name + ' (' + chemical.brand + ')'}"></span>
+            </label><br/>
+        </div>
         </p>
         <button type="submit">Save</button>
     </form>

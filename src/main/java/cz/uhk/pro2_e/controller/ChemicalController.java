@@ -11,6 +11,8 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/chemicals")
 public class ChemicalController {
@@ -23,8 +25,16 @@ public class ChemicalController {
     }
 
     @GetMapping("/")
-    public String list(Model model) {
-        model.addAttribute("chemicals", chemicalService.getAllChemicals());
+    public String list(org.springframework.ui.Model model) {
+        Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+        MyUserDetails userDetails = (MyUserDetails) auth.getPrincipal();
+        User currentUser = userDetails.getUser();
+
+        List<Chemical> chemicals = currentUser.getRole().equals("ADMIN")
+                ? chemicalService.getAllChemicals()
+                : chemicalService.getAllChemicalsByUser(currentUser);
+
+        model.addAttribute("chemicals", chemicals);
         return "chemicals_list";
     }
 
@@ -48,16 +58,23 @@ public class ChemicalController {
 
     @PostMapping("/save")
     public String save(@ModelAttribute Chemical chemical) {
-
         Authentication auth = SecurityContextHolder.getContext().getAuthentication();
         MyUserDetails userDetails = (MyUserDetails) auth.getPrincipal();
         User currentUser = userDetails.getUser();
+
         if (chemical.getId() == 0) {
             chemical.setUser(currentUser);
+        } else {
+            Chemical original = chemicalService.getChemical(chemical.getId());
+            if (original != null) {
+                chemical.setUser(original.getUser());
+            }
         }
+
         chemicalService.saveChemical(chemical);
         return "redirect:/chemicals/";
     }
+
 
     @GetMapping("/{id}/delete")
     public String delete(Model model, @PathVariable long id) {

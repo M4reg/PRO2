@@ -24,6 +24,11 @@
     <p><strong>Name:</strong> <span th:text="${color.name}">Color Name</span></p>
     <p><strong>Brand:</strong> <span th:text="${color.brand}">Brand</span></p>
     <p><strong>Code:</strong> <span th:text="${color.code}">Code</span></p>
+    <p sec:authorize="hasRole('ROLE_ADMIN')">
+        <strong>Created by:</strong>
+        <span th:if="${color.user != null}" th:text="${color.user.name}">Autor</span>
+        <span th:if="${color.user == null}">Neznámý uživatel</span>
+    </p>
     <a th:href="@{/colors/{id}/edit(id=${color.id})}">Edit Color</a>
     <a th:href="@{/colors/{id}/delete(id=${color.id})}">Delete Color</a>
     <a href="/colors/">Back to Colors List</a>
