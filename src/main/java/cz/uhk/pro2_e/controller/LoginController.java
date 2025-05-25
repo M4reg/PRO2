@@ -41,7 +41,6 @@ public class LoginController {
             // Username not found, proceed with registration
         }
         user.setRole("USER");
-        user.setPassword(passwordEncoder.encode(user.getPassword()));
         userService.saveUser(user);
         return "redirect:/login?registered=true";
     }
