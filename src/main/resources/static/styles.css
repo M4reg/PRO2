@@ -2,11 +2,12 @@
 
 /* Custom color variables */
 :root {
-    --primary-color: #1E88E5; /* Dark Blue */
-    --danger-color: #EF5350; /* Red */
-    --light-gray: #ECEFF1; /* Light Gray */
-    --white: #FFFFFF;
-    --dark-gray: #333333;
+    --primary-color: #4A90E2; /* Jemnější modrá */
+    --danger-color: #C62828; /* Hlubší červená */
+    --light-gray: #F5F5F5; /* Teplejší světle šedá pro pozadí */
+    --white: #FDFDFB; /* Teplé bílé pozadí pro karty */
+    --dark-gray: #1A2526; /* Tmavší pozadí hlavičky */
+    --text-gray: #424242; /* Tmavší šedá pro text */
 }
 
 /* General body styling */
@@ -115,8 +116,9 @@ h2 {
 /* Model grid for model cards */
 .model-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Increased min width for larger cards */
-    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
 }
 
 /* Model card styling */
@@ -152,12 +154,21 @@ h2 {
 }
 
 .model-card a.btn {
+    margin: 0 !important;
+}
 
-    font-size: 1rem; /* Ensure button text is readable */
+a.btn:hover, a.btn:focus {
+    text-decoration: none !important;
 }
 
 .model-card a:hover {
     text-decoration: none; /* Maintain no underline on hover for buttons */
+}
+.model-card div {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 0.5rem;
+    justify-content: space-evenly; /* tlačítka vyplní prostor */
 }
 
 /* Table styling */
@@ -180,6 +191,25 @@ th {
     background-color: var(--light-gray);
     font-weight: 600;
     color: var(--dark-gray);
+}
+
+.table th, .table td {
+    max-width: 120px;
+    padding: 0.5rem;
+    font-size: 0.95em;
+}
+.table td:last-child, .table th:last-child {
+    max-width: 180px;
+    width: 1%;
+    white-space: nowrap;
+    /* Přidáno: */
+    display: flex;
+    gap: 0.25rem;
+    align-items: center;
+}
+
+.table .btn {
+    margin-bottom: 0; /* Zruší spodní mezeru mezi tlačítky */
 }
 
 /* Form styling */
@@ -231,6 +261,27 @@ form button.btn-danger:hover {
     background-color: #d32f2f; /* Darker shade of red */
 }
 
+.login-form {
+    width: 100%;
+    max-width: 500px;
+    min-width: 350px;
+    min-height: 350px; /* přidáno pro větší výšku */
+    margin: 2.5rem auto 0 auto;
+    box-shadow: 0 2px 16px rgba(30, 136, 229, 0.08);
+    border-radius: 0.5rem;
+    background: var(--white);
+    padding: 2rem 1.5rem;
+}
+
+.login-center {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 90vh;
+}
+
+
 /* Links */
 a {
     color: var(--primary-color);
@@ -272,6 +323,15 @@ a:hover {
     font-size: 1.1rem;
     color: var(--dark-gray);
 }
+.truncate-email {
+    display: block;
+    max-width: 160px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+
 
 /* Responsive adjustments */
 @media (max-width: 576px) {
@@ -290,5 +350,27 @@ a:hover {
 
     form button {
         width: 100%;
+    }
+    .model-card {
+        max-width: 100vw;
+        margin-left: 30px;
+        margin-right: 30px;
+        padding: 1rem;
+    }
+}
+
+@media (max-width: 769px) {
+    .table td:last-child, .table th:last-child {
+        max-width: 100%;
+        width: auto;
+        display: flex;
+        flex-wrap: wrap; /* povolí zalomení tlačítek na více řádků */
+        gap: 0.25rem;
+        white-space: normal;
+    }
+    .table .btn {
+        min-width: 80px;
+        font-size: 0.85em;
+        padding: 0.25rem 0.5rem;
     }
 }
