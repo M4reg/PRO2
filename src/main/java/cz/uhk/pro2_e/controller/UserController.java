@@ -47,10 +47,6 @@ public class UserController {
 
     @PostMapping("/save")
     public String save(@ModelAttribute User user) {
-        // zašifrovat heslo jen pokud je nově zadané nebo při novém uživateli
-        if (user.getId() == 0 || !user.getPassword().startsWith("$2a$")) {
-            user.setPassword(passwordEncoder.encode(user.getPassword()));
-        }
         userService.saveUser(user);
         return "redirect:/users/";
     }
